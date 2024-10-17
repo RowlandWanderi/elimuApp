@@ -10,27 +10,27 @@ auth_bp = Blueprint('auth_bp', __name__)
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
+    data = request.get_json() or request.form # Handle both JSON and form data
     email = data.get('email')  
     password = data.get('password')
     
     """ email = request.form.get("email")
-    password = request.form.get("password") """
+    password = request.form.get("password")  """
     
     user = User.query.filter_by(email=email).first()
 
     if user:
-        print(f"Debug: User Found - Email: {user.email}, Hashed Password: {user.password}")
+        print(f"Debug: User Found - Email: {user.email}, Hashed Password: {user.password} {password}",)
         
         if check_password_hash(user.password, password):
             access_token = create_access_token(identity=user.id)
             return jsonify(access_token=access_token)
         
         print("Debug: Incorrect Password")
-        return jsonify({"error": "Wrong Password!"}), 401
+        return jsonify({f"error": "Wrong Password!"}), 401
 
     else:
-        print("Debug: User Not Found")
+        print(f"Debug: User Not Found Email: {email}")
         return jsonify({"error": "User doesn't exist!"}), 404
 # Get logged in user
 @auth_bp.route("/authenticated_user", methods=["GET"])

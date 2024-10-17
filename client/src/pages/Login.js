@@ -19,7 +19,7 @@ export default function Login() {
       resetPassword(email, newPassword);
     } else {
       // Handle login
-      login(username, password);
+      login(email, password);
     }
 
     setUsername('');
@@ -38,8 +38,8 @@ export default function Login() {
           {!showResetForm ? (
             <>
               <div className='mb-3'>
-                <label className='form-label'>Username</label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} type='text' className='form-control' />
+                <label className='form-label'>Email</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type='text' className='form-control' />
               </div>
 
               <div className='mb-3'>

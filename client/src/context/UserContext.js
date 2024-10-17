@@ -15,14 +15,14 @@ export default function UserProvider({children})
     const navigate = useNavigate()
 
     // add user
-    function addUser(username, email, password)
+    function addUser(username, email, password, role)
     {
         fetch("/register",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username, email, password })
+            body: JSON.stringify({username, email, password, role })
 
         }
         )
@@ -101,13 +101,13 @@ export default function UserProvider({children})
     
     
     // login user
-function login(username, password) {
+function login(email, password) {
     fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
       .then((response) => {

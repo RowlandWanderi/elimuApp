@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask_cors import CORS
 
 
 
@@ -18,6 +19,7 @@ def generate_secret_key(length=32):
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+CORS(app)
 
 db.init_app(app)
 migrate = Migrate(app, db)

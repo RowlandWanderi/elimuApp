@@ -9,11 +9,16 @@ user_bp = Blueprint('user_bp', __name__)
 # Create a user
 @user_bp.route("/register", methods=["POST"])
 def create_user():
-    data = request.get_json()
+    data = request.get_json() or request.form  # Handle both JSON and form data
     username = data.get("username")
     email = data.get("email")
     password = generate_password_hash(data.get("password"))  # Ensure password is hashed
     role = data.get("role")
+    
+    """ username = request.form.get("username")
+    email = request.form.get("email")
+    password = generate_password_hash(request.form.get("password"))  # Ensure password is hashed
+    role = request.form.get("role") """
     
     
     check_username = User.query.filter_by(username = username).first()
@@ -42,6 +47,7 @@ def get_user(id):
             "username": user.username,
             "email": user.email,
             "role": user.role,
+            "password" : user.password,
             
         })
         return jsonify(user_list), 200
