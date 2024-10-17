@@ -16,6 +16,7 @@ def get_all_courses():
             'id': course.id,
             'title':course.title,
             'description': course.description,
+            'status' : course.status,
             
         }
         courses_list.append(course_data)

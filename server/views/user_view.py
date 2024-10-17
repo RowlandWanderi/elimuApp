@@ -12,7 +12,8 @@ def create_user():
     data = request.get_json()
     username = data.get("username")
     email = data.get("email")
-    password = generate_password_hash(data.get("password"), )
+    password = generate_password_hash(data.get("password"))  # Ensure password is hashed
+    role = data.get("role")
     
     
     check_username = User.query.filter_by(username = username).first()
@@ -23,7 +24,7 @@ def create_user():
         conflicting_field = "username" if check_username else "email" 
         return jsonify({"error": f"{conflicting_field} already exists!"}), 409    
     else:
-        new_user = User(email = email, password = password, username = username, )
+        new_user = User(email = email, password = password, username = username, role = role )
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"success": "User added successfully!"}), 201
@@ -41,6 +42,7 @@ def get_user(id):
             "username": user.username,
             "email": user.email,
             "role": user.role,
+            
         })
         return jsonify(user_list), 200
     else:

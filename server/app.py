@@ -25,6 +25,7 @@ migrate = Migrate(app, db)
 app.register_blueprint(user_bp)
 app.register_blueprint(course_bp)
 app.register_blueprint(enrollment_bp)
+app.register_blueprint(auth_bp)
 
 jwt = JWTManager()
 app.config["JWT_SECRET_KEY"] =  generate_secret_key()
