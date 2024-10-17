@@ -45,6 +45,7 @@ class Course(db.Model ):
     description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    status = db.Column(db.String(20), default='Pending')  # New column for course status
     #foreign key to user table
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     

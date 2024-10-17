@@ -40,6 +40,7 @@ def get_user(id):
             "id": user.id,
             "username": user.username,
             "email": user.email,
+            "role": user.role,
         })
         return jsonify(user_list), 200
     else:
