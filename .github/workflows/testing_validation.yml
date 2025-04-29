@@ -1,0 +1,26 @@
+name: Secrets Validation
+
+on: 
+    workflow_dispatch
+
+jobs:
+    secret_validation:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Validate required secrets
+              env:
+                TEST_SECRET_KEY: ${{ secrets.TEST_SECRET_KEY }}
+                TEST_SECRET_NAME: ${{ secrets.TEST_SECRET_NAME }}
+              run: |
+                REQUIRED_SECRETS=(
+                "TEST_SECRET_KEY"
+                "TEST_SECRET_NAME"
+                )
+
+                for SECRET in "${REQUIRED_SECRETS[@]}"; do
+                    if [ -z "${!SECRET}" ]; then
+                    echo "Error: Missing required secret: $SECRET"
+                    exit 1
+                    fi
+                done
+                echo "All required secrets are present."
